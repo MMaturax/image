@@ -65,13 +65,15 @@ class Font extends AbstractFont
                 case 'middle':
                 // calculate box size
                 $dimensions = $image->getCore()->queryFontMetrics($draw, $this->text);
-                $posy = $posy + $dimensions['textHeight'] * 0.65 / 2;
+                //$posy = $posy + $dimensions['textHeight'] * 0.65 / 2;
+                $posy = $posy + $dimensions['boundingBox']['y2'] * 0.65 / 2;
                 break;
 
                 case 'top':
                 // calculate box size
-                $dimensions = $image->getCore()->queryFontMetrics($draw, $this->text, false);
-                $posy = $posy + $dimensions['characterHeight'];
+                    $dimensions = $image->getCore()->queryFontMetrics($draw, $this->text, false);
+                    // $posy = $posy + $dimensions['characterHeight'];
+                    $posy = $posy + $dimensions['boundingBox']['y2'];
                 break;
             }
         }
@@ -85,7 +87,7 @@ class Font extends AbstractFont
      *
      * @return array
      */
-    public function getBoxSize()
+    public function getBoxSize($raw = false)
     {
         $box = [];
 
@@ -105,6 +107,7 @@ class Font extends AbstractFont
 
         $draw->setFontSize($this->size);
 
+
         $dimensions = (new \Imagick())->queryFontMetrics($draw, $this->text);
 
         if (strlen($this->text) == 0) {
@@ -115,6 +118,10 @@ class Font extends AbstractFont
             // get boxsize
             $box['width'] = intval(abs($dimensions['textWidth']));
             $box['height'] = intval(abs($dimensions['textHeight']));
+        }
+
+        if ($raw) {
+            return $dimensions;
         }
 
         return $box;

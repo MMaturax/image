@@ -4,6 +4,8 @@ namespace Intervention\Image;
 
 abstract class AbstractFont
 {
+
+    public \ImagickDraw $draw;
     /**
      * Text to be written
      *
