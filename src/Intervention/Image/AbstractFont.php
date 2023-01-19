@@ -4,8 +4,6 @@ namespace Intervention\Image;
 
 abstract class AbstractFont
 {
-
-    public \ImagickDraw $draw;
     /**
      * Text to be written
      *
@@ -54,6 +52,8 @@ abstract class AbstractFont
      * @var float
      */
     public $kerning = 0;
+    public $lineHeight = 0;
+    public $opacity = 100;
 
     /**
      * Path to TTF or GD library internal font file of the text
@@ -98,6 +98,20 @@ abstract class AbstractFont
     public function text($text)
     {
         $this->text = $text;
+
+        return $this;
+    }
+
+    public function lineHeight($size)
+    {
+        $this->lineHeight = $size;
+
+        return $this;
+    }
+
+    public function opacity($opacity)
+    {
+        $this->opacity = $opacity;
 
         return $this;
     }
