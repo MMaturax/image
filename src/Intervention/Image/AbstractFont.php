@@ -4,6 +4,9 @@ namespace Intervention\Image;
 
 abstract class AbstractFont
 {
+
+
+    public  \ImagickDraw $draw;
     /**
      * Text to be written
      *
@@ -55,6 +58,47 @@ abstract class AbstractFont
     public $lineHeight = 0;
     public $opacity = 100;
 
+    public $multiLine =false;
+    public $maxWidth =0;
+    public $totalLines = 1;
+
+    /**
+     * @param int $maxWidth
+     */
+    public function maxWidth(int $maxWidth): void
+    {
+        $this->maxWidth = $maxWidth;
+    }
+
+
+    /**
+     * @param bool $multiLine
+     */
+    public function multiLine(bool $multiLine): void
+    {
+        $this->multiLine = $multiLine;
+    }
+
+    /**
+     * @param int $totalLines
+     */
+    public function totalLines(int $totalLines): void
+    {
+        $this->totalLines = $totalLines;
+    }
+
+    /**
+     * @return int
+     */
+    public function getTotalLines(): int
+    {
+        return $this->totalLines;
+    }
+
+
+
+
+
     /**
      * Path to TTF or GD library internal font file of the text
      *
@@ -102,20 +146,6 @@ abstract class AbstractFont
         return $this;
     }
 
-    public function lineHeight($size)
-    {
-        $this->lineHeight = $size;
-
-        return $this;
-    }
-
-    public function opacity($opacity)
-    {
-        $this->opacity = $opacity;
-
-        return $this;
-    }
-
     /**
      * Get text to be written
      *
@@ -135,6 +165,20 @@ abstract class AbstractFont
     public function size($size)
     {
         $this->size = $size;
+
+        return $this;
+    }
+
+    public function lineHeight($size)
+    {
+        $this->lineHeight = $size;
+
+        return $this;
+    }
+
+    public function opacity($opacity)
+    {
+        $this->opacity = $opacity;
 
         return $this;
     }
